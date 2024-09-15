@@ -10,6 +10,7 @@ import { Cursor } from "@/components/cursor";
 import { ChevronLeft, CircleHelp, Italic } from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
 import ineImage from "@/assets/ineImage.png";
+import selfieImage from "@/assets/selfieImage.png";
 
 const options = [
 	{ id: 1, emoji: "🌍", text: "Explorar nuevos destinos" },
@@ -187,6 +188,39 @@ export default function Page() {
 									whileTap={{ scale: 0.95 }}
 									onClick={() => {
 										if (currentStep === 3) {
+											setCurrentStep(4);
+											setDirection(1);
+											return;
+										}
+										setDirection(1);
+										setCurrentStep((prev) => prev + 1);
+									}}
+								>
+									Continuar
+								</motion.button>
+							</div>
+						</div>
+					</>
+				);
+			case 4:
+				return (
+					<>
+						<div className='flex flex-col h-full w-full items-center justify-between py-8 px-8'>
+							<div className='text-left mt-20 flex-col flex gap-2 text-balance'>
+								<h1 className='text-3xl font-bold text-black tracking-tight'>
+								¿Listo para una selfie? 📸
+								</h1>
+								<p className='font-semibold text-gray-400 text-center mt-4'>
+								Tu selfie nos ayuda a asegurar que eres tú y mantener tu cuenta segura. Solo toma una foto rápida y ¡listo! Esto nos permite proteger tu cuenta y ofrecerte una experiencia personalizada.
+								</p>
+							</div>
+							<Image src={selfieImage} alt='camera' className='w-40 h-40 mb-10 self-center' />
+							<div className='flex gap-2 w-full'>
+								<motion.button
+									className='rounded-full text-lg font-bold w-full h-12 bg-banorte hover:bg-banorte/95 text-white disabled:opacity-50 disabled:pointer-events-none'
+									whileTap={{ scale: 0.95 }}
+									onClick={() => {
+										if (currentStep === 4) {
 											setCurrentStep(0);
 											setDirection(-1);
 											return;
