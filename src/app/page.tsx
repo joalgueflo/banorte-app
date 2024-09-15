@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Cursor } from "@/components/cursor";
 import { ChevronLeft, CircleHelp, Italic } from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
+import ineImage from "@/assets/ineImage.png";
 
 const options = [
 	{ id: 1, emoji: "🌍", text: "Explorar nuevos destinos" },
@@ -153,11 +154,39 @@ export default function Page() {
 								</div>
 							</div>
 							<div className='flex gap-2 w-full'>
+							<motion.button
+                className='rounded-full text-lg font-bold w-full h-12 bg-banorte hover:bg-banorte/95 text-white disabled:opacity-50 disabled:pointer-events-none'
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                    setDirection(1);
+                    setCurrentStep(3);
+                }}
+            >
+                Continuar
+            </motion.button>
+							</div>
+						</div>
+					</>
+				);
+			case 3:
+				return (
+					<>
+						<div className='flex flex-col h-full w-full items-center justify-between py-8 px-8'>
+							<div className='text-left mt-20 flex-col flex gap-2 text-balance'>
+								<h1 className='text-3xl font-bold text-black tracking-tight'>
+									Sube tu INE
+								</h1>
+								<p className='font-semibold text-gray-400 text-center mt-4'>
+									Sube una foto clara de tu INE para verificar tu identidad. Es seguro y solo tomará un momento. Así garantizamos que tu cuenta sea realmente tuya.
+								</p>
+							</div>
+							<Image src={ineImage} alt='camera' className='w-40 h-40 mb-10 self-center' />
+							<div className='flex gap-2 w-full'>
 								<motion.button
 									className='rounded-full text-lg font-bold w-full h-12 bg-banorte hover:bg-banorte/95 text-white disabled:opacity-50 disabled:pointer-events-none'
 									whileTap={{ scale: 0.95 }}
 									onClick={() => {
-										if (currentStep === 2) {
+										if (currentStep === 3) {
 											setCurrentStep(0);
 											setDirection(-1);
 											return;
@@ -172,80 +201,79 @@ export default function Page() {
 						</div>
 					</>
 				);
-		}
-	}, [currentStep]);
-
+        }
+    }, [currentStep]);
 	return (
-		<MotionConfig transition={{ duration: 0.5, type: "spring", bounce: 0 }}>
-			<main className='flex h-screen select-none items-center justify-center overflow-hidden font-display'>
-				<div className='relative flex aspect-square h-screen items-center justify-center bg-gradient-to-br from-[#FAF9F2]/70 to-[#F2F0E7]'>
-					<div className='absolute left-1/2 top-1/2 z-10 h-[810px] w-[375px] -translate-x-1/2 -translate-y-1/2 overflow-hidden'>
-						<section className='relative z-50 bg-white rounded-[44px] overflow-hidden h-full w-full flex items-center justify-center'>
-							{currentStep > 0 && (
-								<AnimatePresence mode='popLayout' initial={false}>
-									<motion.div className='flex justify-evenly items-center flex-row absolute top-16 w-full z-50'>
-										<motion.button
-											onClick={() => {
-												if (currentStep === 0) {
-													return;
-												}
-												setDirection(-1);
-												setCurrentStep((prev) => prev - 1);
-											}}
-											type='button'
-											className='focus-visible:shadow-focus-ring-button z-50 flex h-8 w-8 items-center justify-center transition-transform focus:scale-95 focus:outline-none focus:ring-0 active:scale-75 rounded-full bg-[#E4E3E5] p-1 text-[#807E85]'
-										>
-											<ChevronLeft />
-										</motion.button>
-										<Progress
-											className='w-7/12 z-50'
-											value={currentStep * 10}
-										/>
-										<CircleHelp className='text-[#807E85] h-8 w-8 p-1' />
-									</motion.div>
-								</AnimatePresence>
-							)}
-							<AnimatePresence
-								mode='popLayout'
-								initial={false}
-								custom={direction}
-							>
-								<motion.div
-									key={currentStep}
-									variants={variants}
-									initial='initial'
-									animate='active'
-									exit='exit'
-									custom={direction}
-									className='size-full fixed left-0 top-0 z-10 flex items-center justify-center overflow-hidden rounded-[44px] bg-white flex-col'
-								>
-									{content}
-								</motion.div>
-							</AnimatePresence>
-						</section>
-					</div>
+        <MotionConfig transition={{ duration: 0.5, type: "spring", bounce: 0 }}>
+            <main className='flex h-screen select-none items-center justify-center overflow-hidden font-display'>
+                <div className='relative flex aspect-square h-screen items-center justify-center bg-gradient-to-br from-[#FAF9F2]/70 to-[#F2F0E7]'>
+                    <div className='absolute left-1/2 top-1/2 z-10 h-[810px] w-[375px] -translate-x-1/2 -translate-y-1/2 overflow-hidden'>
+                        <section className='relative z-50 bg-white rounded-[44px] overflow-hidden h-full w-full flex items-center justify-center'>
+                            {currentStep > 0 && (
+                                <AnimatePresence mode='popLayout' initial={false}>
+                                    <motion.div className='flex justify-evenly items-center flex-row absolute top-16 w-full z-50'>
+                                        <motion.button
+                                            onClick={() => {
+                                                if (currentStep === 0) {
+                                                    return;
+                                                }
+                                                setDirection(-1);
+                                                setCurrentStep((prev) => prev - 1);
+                                            }}
+                                            type='button'
+                                            className='focus-visible:shadow-focus-ring-button z-50 flex h-8 w-8 items-center justify-center transition-transform focus:scale-95 focus:outline-none focus:ring-0 active:scale-75 rounded-full bg-[#E4E3E5] p-1 text-[#807E85]'
+                                        >
+                                            <ChevronLeft />
+                                        </motion.button>
+                                        <Progress
+                                            className='w-7/12 z-50'
+                                            value={currentStep * 10}
+                                        />
+                                        <CircleHelp className='text-[#807E85] h-8 w-8 p-1' />
+                                    </motion.div>
+                                </AnimatePresence>
+                            )}
+                            <AnimatePresence
+                                mode='popLayout'
+                                initial={false}
+                                custom={direction}
+                            >
+                                <motion.div
+                                    key={currentStep}
+                                    variants={variants}
+                                    initial='initial'
+                                    animate='active'
+                                    exit='exit'
+                                    custom={direction}
+                                    className='size-full fixed left-0 top-0 z-10 flex items-center justify-center overflow-hidden rounded-[44px] bg-white flex-col'
+                                >
+                                    {content}
+                                </motion.div>
+                            </AnimatePresence>
+                        </section>
+                    </div>
 
-					<div className='fixed bottom-[120px] left-1/2 z-50 h-1.5 w-[360px] -translate-x-1/2 px-28'>
-						<div className='size-full rounded-3xl bg-black' />
-					</div>
+                    <div className='fixed bottom-[120px] left-1/2 z-50 h-1.5 w-[360px] -translate-x-1/2 px-28'>
+                        <div className='size-full rounded-3xl bg-black' />
+                    </div>
 
-					<Image
-						src={svgPhone}
-						alt='iphone mock'
-						className='pointer-events-none relative z-50 drop-shadow-xl'
-					/>
-				</div>
-			</main>
-		</MotionConfig>
-	);
+                    <Image
+                        src={svgPhone}
+                        alt='iphone mock'
+                        className='pointer-events-none relative z-50 drop-shadow-xl'
+                    />
+                </div>
+            </main>
+        </MotionConfig>
+    );
 }
 
 const variants = {
-	initial: (direction: number) => {
-		return { x: `${110 * direction}%`, opacity: 0 };
-	},
-	active: { x: "0%", opacity: 1 },
-	exit: (direction: number) => {
-		return { x: `${-110 * direction}%`, opacity: 0 };
-	},
+    initial: (direction: number) => {
+        return { x: `${110 * direction}%`, opacity: 0 };
+    },
+    active: { x: "0%", opacity: 1 },
+    exit: (direction: number) => {
+        return { x: `${-110 * direction}%`, opacity: 0 };
+    },
 };
